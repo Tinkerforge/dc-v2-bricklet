@@ -1,8 +1,7 @@
 /* dc-v2-bricklet
  * Copyright (C) 2020 Olaf Lüke <olaf@tinkerforge.com>
  *
- * config_custom_bootstrapper.h: XMC bootstrapper configurations for
- *                               DC Bricklet 2.0
+ * mc33926.h: Driver for MC33926
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,22 +19,46 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#ifndef CONFIG_CUSTOM_BOOTSTRAPPER_H
-#define CONFIG_CUSTOM_BOOTSTRAPPER_H
+#ifndef MC33926_H
+#define MC33926_H
 
-#define BOOTSTRAPPER_STATUS_LED_PIN P2_1
-#define BOOTSTRAPPER_USIC_CHANNEL   USIC0_CH0
-#define BOOTSTRAPPER_PAGE_SIZE      256
-#define BOOTSTRAPPER_FLASH_START    0x10001000
+#include <stdint.h>
+#include <stdbool.h>
 
-#define BOOTSTRAPPER_USIC           XMC_UART0_CH0
-#define BOOTSTRAPPER_RX_PIN         P0_14
-#define BOOTSTRAPPER_RX_INPUT       XMC_USIC_CH_INPUT_DX0
-#define BOOTSTRAPPER_RX_SOURCE      0b000 // DX0A
+#include "bricklib2/utility/led_flicker.h"
 
-#define BOOTSTRAPPER_TX_PIN         P0_15
-#define BOOTSTRAPPER_TX_PIN_AF      (XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT6 | P0_15_AF_U0C0_DOUT0)
+typedef struct {
+	int16_t velocity;
+	int32_t velocity_current_high_res;
 
-#define BOOTSTRAPPER_BMI_WITH_CAN   0
+	uint16_t acceleration;
+	uint16_t deceleration;
+	uint16_t pwm_frequency;
+
+	bool full_brake;
+	bool enabled;
+
+	uint8_t drive_mode;
+
+	LEDFlickerState error_led_flicker_state;
+
+	uint16_t max_duty_cycle;
+
+	bool cb_emergency_shutdown_enabled;
+	bool cb_velocity_reached_enabled;
+	uint32_t cb_curent_velocity_period;
+	bool cb_current_velocity_value_has_to_change;
+
+	bool velocity_reached;
+	bool emergency_shutdown;
+
+	bool nfault;
+	uint32_t nfault_last_time;
+} MC33926;
+
+extern MC33926 mc33926;
+
+void mc33926_init(void);
+void mc33926_tick(void);
 
 #endif

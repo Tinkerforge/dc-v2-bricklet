@@ -1,8 +1,7 @@
 /* dc-v2-bricklet
  * Copyright (C) 2020 Olaf Lüke <olaf@tinkerforge.com>
  *
- * config_custom_bootstrapper.h: XMC bootstrapper configurations for
- *                               DC Bricklet 2.0
+ * voltage.h: Driver for DC Bricklet 2.0 voltage measurements
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,22 +19,27 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#ifndef CONFIG_CUSTOM_BOOTSTRAPPER_H
-#define CONFIG_CUSTOM_BOOTSTRAPPER_H
+#ifndef VOLTAGE_H
+#define VOLTAGE_H
 
-#define BOOTSTRAPPER_STATUS_LED_PIN P2_1
-#define BOOTSTRAPPER_USIC_CHANNEL   USIC0_CH0
-#define BOOTSTRAPPER_PAGE_SIZE      256
-#define BOOTSTRAPPER_FLASH_START    0x10001000
+#include <stdint.h>
 
-#define BOOTSTRAPPER_USIC           XMC_UART0_CH0
-#define BOOTSTRAPPER_RX_PIN         P0_14
-#define BOOTSTRAPPER_RX_INPUT       XMC_USIC_CH_INPUT_DX0
-#define BOOTSTRAPPER_RX_SOURCE      0b000 // DX0A
+typedef struct {
+    uint16_t voltage;
+    uint16_t current;
 
-#define BOOTSTRAPPER_TX_PIN         P0_15
-#define BOOTSTRAPPER_TX_PIN_AF      (XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT6 | P0_15_AF_U0C0_DOUT0)
+    uint64_t adc_sum_fb;
+    uint64_t adc_sum_vext;
 
-#define BOOTSTRAPPER_BMI_WITH_CAN   0
+    uint32_t adc_count_fb;
+    uint32_t adc_count_vext;
+
+    uint32_t adc_last_time;
+} Voltage;
+
+extern Voltage voltage;
+
+void voltage_init(void);
+void voltage_tick(void);
 
 #endif

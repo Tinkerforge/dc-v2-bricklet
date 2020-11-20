@@ -28,15 +28,21 @@
 #include "bricklib2/hal/system_timer/system_timer.h"
 #include "bricklib2/logging/logging.h"
 #include "communication.h"
+#include "mc33926.h"
+#include "voltage.h"
 
 int main(void) {
 	logging_init();
 	logd("Start DC Bricklet 2.0\n\r");
 
 	communication_init();
+	mc33926_init();
+	voltage_init();
 
 	while(true) {
 		bootloader_tick();
 		communication_tick();
+		mc33926_tick();
+		voltage_tick();
 	}
 }

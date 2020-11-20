@@ -1,8 +1,7 @@
 /* dc-v2-bricklet
  * Copyright (C) 2020 Olaf Lüke <olaf@tinkerforge.com>
  *
- * config_custom_bootstrapper.h: XMC bootstrapper configurations for
- *                               DC Bricklet 2.0
+ * mc33926_config.h: Configuration for driver for MC33926
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,22 +19,24 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#ifndef CONFIG_CUSTOM_BOOTSTRAPPER_H
-#define CONFIG_CUSTOM_BOOTSTRAPPER_H
+#ifndef CONFIG_MC33926_H
+#define CONFIG_MC33926_H
 
-#define BOOTSTRAPPER_STATUS_LED_PIN P2_1
-#define BOOTSTRAPPER_USIC_CHANNEL   USIC0_CH0
-#define BOOTSTRAPPER_PAGE_SIZE      256
-#define BOOTSTRAPPER_FLASH_START    0x10001000
+#include "xmc_gpio.h"
 
-#define BOOTSTRAPPER_USIC           XMC_UART0_CH0
-#define BOOTSTRAPPER_RX_PIN         P0_14
-#define BOOTSTRAPPER_RX_INPUT       XMC_USIC_CH_INPUT_DX0
-#define BOOTSTRAPPER_RX_SOURCE      0b000 // DX0A
+#define MC33926_D2_PIN         P0_0
+#define MC33926_D1_PIN         P0_5
+#define MC33926_D1_SLICE       0 // ALT4
+#define MC33926_EN_PIN         P0_6
+#define MC33926_STATUS_PIN     P0_7
+#define MC33926_SLEW_PIN       P0_9
+#define MC33926_INV_PIN        P0_8
 
-#define BOOTSTRAPPER_TX_PIN         P0_15
-#define BOOTSTRAPPER_TX_PIN_AF      (XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT6 | P0_15_AF_U0C0_DOUT0)
+#define MC33926_IN1_PIN        P1_1
+#define MC33926_IN1_SLICE      1 // ALT2
+#define MC33926_IN2_PIN        P1_0
+#define MC33926_IN2_SLICE      0 // ALT2
 
-#define BOOTSTRAPPER_BMI_WITH_CAN   0
+#define MC33926_ERROR_LED_PIN  P2_1
 
 #endif
