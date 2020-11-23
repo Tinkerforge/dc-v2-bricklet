@@ -6,7 +6,7 @@ encoding utf-8
 Sheet 1 1
 Title "DC Bricklet"
 Date "2020-10-06"
-Rev "2.0"
+Rev "2.1"
 Comp "Tinkerforge GmbH"
 Comment1 "Licensed under CERN OHL v.1.1"
 Comment2 "Copyright (©) 2020, T.Schneidemann <tim@tinkerforge.com>"
@@ -506,7 +506,7 @@ AR Path="/5F7C86AA/5F7EBBE7" Ref="R?"  Part="1"
 AR Path="/5F7EBBE7" Ref="R1"  Part="1" 
 F 0 "R1" V 7780 4350 50  0000 C CNN
 F 1 "1k" V 7700 4350 39  0000 C CNN
-F 2 "kicad-libraries:R0402F" H 7700 4350 60  0001 C CNN
+F 2 "kicad-libraries:R0603F" H 7700 4350 60  0001 C CNN
 F 3 "" H 7700 4350 60  0001 C CNN
 	1    7700 4350
 	0    -1   -1   0   
@@ -881,7 +881,7 @@ Text GLabel 2300 3400 0    39   Output ~ 0
 PWR-INV
 Wire Wire Line
 	2300 3400 2550 3400
-Text GLabel 2450 5500 0    39   Input ~ 0
+Text GLabel 2450 5400 0    39   Input ~ 0
 PWR-FB
 Wire Wire Line
 	2450 5600 2550 5600
@@ -1034,7 +1034,7 @@ Wire Wire Line
 Text GLabel 2450 5600 0    39   Input ~ 0
 PWR-VEXT
 Wire Wire Line
-	2450 5500 2550 5500
+	2450 5400 2550 5400
 $Comp
 L tinkerforge:3V3 #PWR0101
 U 1 1 5F81517B
@@ -1172,7 +1172,7 @@ Wire Wire Line
 Wire Wire Line
 	2250 5000 2250 5100
 Wire Wire Line
-	1750 5600 1750 5400
+	1750 5600 1750 5500
 Wire Wire Line
-	1750 5400 2550 5400
+	2550 5500 1750 5500
 $EndSCHEMATC
