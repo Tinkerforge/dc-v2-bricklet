@@ -52,8 +52,8 @@ typedef struct {
 	bool velocity_reached;
 	bool emergency_shutdown;
 
-	bool nfault;
-	uint32_t nfault_last_time;
+	bool nsf;
+	uint32_t nsf_last_time;
 } MC33926;
 
 extern MC33926 mc33926;

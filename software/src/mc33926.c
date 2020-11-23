@@ -91,7 +91,7 @@ static void mc33926_handle_error_led(const uint32_t t) {
 			error = 500;
 		}
 
-		if(mc33926.nfault) {
+		if(mc33926.nsf) {
 			error = 125;
 		}
 
@@ -176,10 +176,33 @@ void mc33926_tick_update_velocity(const uint32_t t) {
 	}
 }
 
+void mc33926_check_nsf(void) {
+	if(!XMC_GPIO_GetInput(MC33926_STATUS_PIN)) {
+		if(mc33926.nsf_last_time == 0) {
+			mc33926.nsf_last_time = system_timer_get_ms();
+		} else {
+			if(system_timer_is_time_elapsed_ms(mc33926.nsf_last_time, 100)) {
+				mc33926.nsf = true;
+			}
+		}
+	} else {
+		mc33926.nsf           = false;
+		mc33926.nsf_last_time = 0;
+	}
+
+
+	if(mc33926.nsf) {
+		if(mc33926.enabled) {
+			mc33926.enabled          = false;
+			mc33926.emergency_shutdown = true;
+		}
+	}
+}
+
 void mc33926_tick(void) {
 	const uint32_t t = system_timer_get_ms();
 
-//	mc33926_check_nfault();
+	mc33926_check_nsf();
 
 	if(mc33926.enabled) {
 		XMC_GPIO_SetOutputHigh(MC33926_EN_PIN);
