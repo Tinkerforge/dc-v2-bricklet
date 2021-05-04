@@ -1,0 +1,40 @@
+# FIXME: This example is incomplete
+# Change XYZ to the UID of your DC Bricklet 2.0
+
+setup:
+	# The acceleration has to be smaller or equal to the maximum
+	# acceleration of the DC motor, otherwise the velocity reached
+	# callback will be called too early
+	publish '{"acceleration": 4096, "deceleration": 16384}' to tinkerforge/request/dc_v2_bricklet/XYZ/set_motion # Slow acceleration (12.5 %/s), fast decceleration (50 %/s) for stopping
+
+	publish '{"velocity": 32767}' to tinkerforge/request/dc_v2_bricklet/XYZ/set_velocity # Full speed forward (100 %)
+
+	# Use velocity reached callback to swing back and forth
+	# between full speed forward and full speed backward
+	subscribe to tinkerforge/callback/dc_v2_bricklet/XYZ/velocity_reached
+		if a message arrives
+			# message contains velocity as int
+			if velocity == 32767
+				print "Velocity: Full speed forward, now turning backward"
+				publish '{"velocity": -32767}' to tinkerforge/request/dc_v2_bricklet/XYZ/set_velocity
+			elseif velocity == -32767
+				print "Velocity: Full speed backward, now turning forward"
+				publish '{"velocity": 32767}' to tinkerforge/request/dc_v2_bricklet/XYZ/set_velocity
+			else
+				print "Error"
+			endif
+		endif
+	endsubscribe
+
+	publish '{"register": true}' to tinkerforge/register/dc_v2_bricklet/XYZ/velocity_reached # Register velocity_reached callback
+
+	# Enable motor power
+	publish '{"enabled": true}' to tinkerforge/request/dc_v2_bricklet/XYZ/set_enabled
+
+cleanup:
+	# If you are done, run this to clean up
+	publish '{"velocity": 0}' to tinkerforge/request/dc_v2_bricklet/XYZ/set_velocity # Stop motor before disabling motor power
+
+	wait for 2s # Wait for motor to actually stop: velocity (100 %) / decceleration (50 %/s) = 2 s
+
+	publish '{"enabled": false}' to tinkerforge/request/dc_v2_bricklet/XYZ/set_enabled # Disable motor power

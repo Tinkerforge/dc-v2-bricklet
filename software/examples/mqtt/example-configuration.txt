@@ -1,0 +1,20 @@
+# Change XYZ to the UID of your DC Bricklet 2.0
+
+setup:
+	publish '{"mode": "drive_coast"}' to tinkerforge/request/dc_v2_bricklet/XYZ/set_drive_mode
+
+	publish '{"frequency": 10000}' to tinkerforge/request/dc_v2_bricklet/XYZ/set_pwm_frequency # Use PWM frequency of 10 kHz
+
+	publish '{"acceleration": 4096, "deceleration": 16384}' to tinkerforge/request/dc_v2_bricklet/XYZ/set_motion # Slow acceleration (12.5 %/s), fast decceleration (50 %/s) for stopping
+
+	publish '{"velocity": 32767}' to tinkerforge/request/dc_v2_bricklet/XYZ/set_velocity # Full speed forward (100 %)
+
+	publish '{"enabled": true}' to tinkerforge/request/dc_v2_bricklet/XYZ/set_enabled # Enable motor power
+
+cleanup:
+	# If you are done, run this to clean up
+	publish '{"velocity": 0}' to tinkerforge/request/dc_v2_bricklet/XYZ/set_velocity # Stop motor before disabling motor power
+
+	wait for 2s # Wait for motor to actually stop: velocity (100 %) / decceleration (50 %/s) = 2 s
+
+	publish '{"enabled": false}' to tinkerforge/request/dc_v2_bricklet/XYZ/set_enabled # Disable motor power
