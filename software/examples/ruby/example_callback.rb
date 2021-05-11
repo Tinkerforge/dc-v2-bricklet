@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 # -*- ruby encoding: utf-8 -*-
 
-# FIXME: This example is incomplete
-
 require 'tinkerforge/ip_connection'
 require 'tinkerforge/bricklet_dc_v2'
 

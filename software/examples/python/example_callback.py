@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# FIXME: This example is incomplete
-
 HOST = "localhost"
 PORT = 4223
 UID = "XYZ" # Change XYZ to the UID of your DC Bricklet 2.0

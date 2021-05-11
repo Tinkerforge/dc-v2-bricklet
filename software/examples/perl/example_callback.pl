@@ -1,7 +1,5 @@
 #!/usr/bin/perl
 
-# FIXME: This example is incomplete
-
 use strict;
 use Tinkerforge::IPConnection;
 use Tinkerforge::BrickletDCV2;
